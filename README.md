@@ -34,3 +34,9 @@ npm run dev
 ```bash
 npm run start
 ```
+
+### Sample
+
+![](/Frontend/public/sample1.jpg)
+![](/Frontend/public/sample3.jpg)
+![](/Frontend/public/sample2.jpg)
