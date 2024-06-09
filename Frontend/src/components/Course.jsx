@@ -58,7 +58,7 @@ function Course() {
                         <button className="bg-pink-500 text-white mt-6 px-2 py-2 rounded-md hover:bg-pink-700 duration-100">Back</button>
                     </Link>
 
-                    <div>
+                    <div className="text-left">
                         <h1 className="text-2xl mt-12 text-left">Premium Courses</h1>
                         <Slider {...settings} className="mt-6">
                             {

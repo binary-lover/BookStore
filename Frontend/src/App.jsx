@@ -7,14 +7,15 @@ function App() {
   return (
 
     <>
-    {/* <Home />
-    <Course /> */}
+    <div className="dark:bg-slate-900 dark:text-white">
+      
     <Routes>
       {/* if path is "/" or "home" then the route will be */}
       <Route path='/home' element = {<Home />} />
       <Route path='/'  element = {<Home />} />
       <Route path='/course' element = {<Courses/>} />
     </Routes>
+    </div>
     </>
   );
 }
