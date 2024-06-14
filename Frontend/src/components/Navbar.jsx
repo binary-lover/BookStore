@@ -35,13 +35,13 @@ function Navbar() {
             <li><a href='/home'>Home</a></li>
             <li><a href='/Course'>Course</a></li>
             <li><a href='/Contact'>Contact</a></li>
-            <li><a href='/About'>About</a></li>
+            {/* <li><a href='/About'>About</a></li> */}
         </>
     )
     return (
         <>
             <div className={`${sticky ? 'sticky-navbar shadow-md bg-base-200 dark:bg-slate-800 dark:text-white duration-200 transition-all ease-in-out' : ''}
-                max-w-screen-2x1 container mx-auto md:px-20 dark:bg-slate-900 dark:text-white  fixed top-0 left-0 right-0 z-50`} >
+                max-w-screen-2x1 mx-auto md:px-20 dark:bg-slate-900 dark:text-white  fixed top-0 left-0 right-0 z-50`} >
                 <div className="navbar p-0">
                     <div className="navbar-start">
                         <div className="dropdown">

@@ -14,7 +14,7 @@ Currently, two official plugins are available:
 #### clone the repository
 
 ```bash
-git clone 
+git clone https://github.com/binary-lover/BookStore
 ```
 
 #### Install dependencies
