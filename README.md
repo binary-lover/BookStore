@@ -20,20 +20,21 @@ git clone https://github.com/binary-lover/BookStore
 #### Install dependencies
 
 ```bash
-
+cd BookStore
+cd Frontend
 npm install
 ```
 
 #### Start the Front End 
 
 ```bash
-cd frontend
 npm run dev
 ```
 
 #### Start the Backend server
 
 ```bash
+cd Backend
 npm run start
 ```
 
@@ -41,4 +42,4 @@ npm run start
 
 ![](/Frontend/public/sample1.jpg)
 ![](/Frontend/public/sample3.jpg)
-![](/Frontend/public/sample2.jpg)
+![](/Frontend/public/sample2.jpg) 
