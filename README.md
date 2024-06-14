@@ -20,6 +20,7 @@ git clone https://github.com/binary-lover/BookStore
 #### Install dependencies
 
 ```bash
+cd frontend
 npm install
 ```
 
