@@ -1,12 +1,24 @@
-import React from 'react'
-import List from "../../public/list.json"
+import React, { useEffect, useState } from 'react'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Cards from './Cards';
+import axios from 'axios';
 
 
 function Freebook() {
+    const [book,setbook] = useState([])
+    useEffect(() => { 
+        const getBook = async () =>{
+            try {
+                const res = await axios.get("http://localhost:4001/book");
+                setbook(res.data);
+            } catch (error) {
+                console.log("Error: ",error);
+            }
+        }
+        getBook();
+    }, [])
     var settings = {
         dots: true,
         infinite: false,
@@ -41,7 +53,7 @@ function Freebook() {
             }
         ]
     };
-    const freeData = List.filter((item) => item.catogory === "free");
+    const freeData = book.filter((item) => item.catogory === "free");
     const url = "https://img.freepik.com/free-vector/hand-drawn-flat-design-stack-books-illustration_23-2149350186.jpg?t=st=1717917871~exp=1717921471~hmac=d0fe9b429fdd851c3cbe894457be70ac9c0f580067f8bbfda31c7c03a97c494a&w=740"
 
     return (

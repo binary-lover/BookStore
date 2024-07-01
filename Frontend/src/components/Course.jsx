@@ -1,12 +1,24 @@
-import React from 'react'
-import List from "../../public/list.json"
+import React, { useEffect, useState } from 'react'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Cards from './Cards';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Course() {
+    const [book,setbook] = useState([])
+    useEffect(() => {
+        const getBook = async () =>{
+            try {
+                const res = await axios.get("http://localhost:4001/book");
+                setbook(res.data);
+            } catch (error) {
+                console.log("Error: ",error);
+            }
+        }
+        getBook();
+    }, [])
     var settings = {
         dots: true,
         infinite: false,
@@ -41,7 +53,7 @@ function Course() {
             }
         ]
     };
-    const premiumBooks = List.filter((item) => (
+    const books = book.filter((item) => (
         item.price > 0
     ))
     const url = "https://img.freepik.com/free-vector/world-book-day-vertical-poster-template_23-2148870862.jpg?t=st=1717925342~exp=1717928942~hmac=33b59a557bdab061d56fac6018217cb4e48cf5a7687a90535c83a3c4e237f46f&w=740"
@@ -62,7 +74,7 @@ function Course() {
                         <h1 className="text-2xl mt-12 text-left">Premium Courses</h1>
                         <Slider {...settings} className="mt-6">
                             {
-                                premiumBooks.map((item) => (
+                                books.map((item) => (
                                     <Cards item={item} url={url} key={item.id} />
                                 ))
                             }
