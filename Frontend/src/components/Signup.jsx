@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import Login from './login';
 import Navbar from './Navbar';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function Signup() {
     const {
@@ -10,7 +12,63 @@ function Signup() {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = async (data) => {
+        const userInfo= {
+            fullname: data.fullname,
+            email: data.email,
+            password: data.password
+        }
+        await axios.post('http://localhost:4001/user/signup', userInfo)
+        .then((response) => {
+            console.log(response.data);
+            if(response.data){
+                // toast.success('user created successfully !');
+                // if theme is dark
+
+                const theme = localStorage.getItem('theme');
+                if(theme === 'dark'){
+                toast.success('user created successfully !',
+                    {
+                      style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                      },
+                    }
+                  );
+                }
+                else{
+                    toast.success('user created successfully !');
+
+                }
+            }
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+        }
+        )
+        .catch((error) => {
+            if(error.response){
+                // toast.error(error.response.data.message);
+                
+                const theme = localStorage.getItem('theme');
+                if(theme === 'dark'){
+                toast.error(error.response.data.message,
+                    {
+                      style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                      },
+                    }
+                  );
+                }
+                else{
+                    toast.error('error.response.data.message');
+
+                }
+
+            } 
+        })
+    }
 
     return (
         <>
@@ -22,12 +80,12 @@ function Signup() {
                             {/* if there is a button in form, it will close the modal */}
                             <Link to={"/"} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</Link>
 
-                            <h3 className="font-bold text-lg">Login</h3>
+                            <h3 className="font-bold text-lg">Signup</h3>
                             {/* Name */}
                             <div className="mt-4 space-y-2">
                                 <h4>Name <span className="text-red-500">*</span></h4>
-                                <input type="text" placeholder='Enter your Name' className="w-80 px-3 h-10 border rounded-md outline-none  dark:bg-slate-900 dark:text-white dark:border-gray-500" {...register("Name", { required: true })} />
-                                {errors.Name && <span className="block text-sm text-red-500">Enter Name</span>}
+                                <input type="text" placeholder='Enter your Name' className="w-80 px-3 h-10 border rounded-md outline-none  dark:bg-slate-900 dark:text-white dark:border-gray-500" {...register("fullname", { required: true })} />
+                                {errors.fullname && <span className="block text-sm text-red-500">Enter Name</span>}
 
                             </div>
                             {/* email */}

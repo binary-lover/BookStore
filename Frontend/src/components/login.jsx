@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function login() {
     const {
@@ -8,7 +10,56 @@ function login() {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = async (data) => {
+        const userInfo= {
+            email: data.email,
+            password: data.password
+        }
+        await axios.post('http://localhost:4001/user/login', userInfo)
+        .then((response) => {
+            console.log(response.data);
+            if(response.data){const theme = localStorage.getItem('theme');
+                if(theme === 'dark'){
+                toast.success('user created successfully !',
+                    {
+                      style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                      },
+                    }
+                  );
+                }
+                else{
+                    toast.success('user created successfully !');
+
+                }
+            }
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+        }
+        )
+        .catch((error) => {
+            if(error.response){
+                // toast.error(error.response.data.message);
+                const theme = localStorage.getItem('theme');
+                if(theme === 'dark'){
+                toast.error(error.response.data.message,
+                    {
+                      style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                      },
+                    }
+                  );
+                }
+                else{
+                    toast.error('error.response.data.message');
+
+                }
+            } 
+        })
+    }
 
     return (
         <div className="">
