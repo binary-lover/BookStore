@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import Login from './login';
 import Navbar from './Navbar';
@@ -7,72 +7,74 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 function Signup() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.form?.pathname || '/';
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
     const onSubmit = async (data) => {
-        const userInfo= {
+        const userInfo = {
             fullname: data.fullname,
             email: data.email,
             password: data.password
         }
         await axios.post('http://localhost:4001/user/signup', userInfo)
-        .then((response) => {
-            console.log(response.data);
-            if(response.data){
-                // toast.success('user created successfully !');
-                // if theme is dark
+            .then((response) => {
+                console.log(response.data);
+                if (response.data) {
+                    // toast.success('user created successfully !');
+                    // if theme is dark
 
-                const theme = localStorage.getItem('theme');
-                if(theme === 'dark'){
-                toast.success('user created successfully !',
-                    {
-                      style: {
-                        borderRadius: '10px',
-                        background: '#333',
-                        color: '#fff',
-                      },
+                    const theme = localStorage.getItem('theme');
+                    if (theme === 'dark') {
+                        toast.success('user created successfully !',
+                            {
+                                style: {
+                                    borderRadius: '10px',
+                                    background: '#333',
+                                    color: '#fff',
+                                },
+                            }
+                        );
                     }
-                  );
+                    else {
+                        toast.success('user created successfully !');
+                    }
+                    navigate(from, { replace: true });
                 }
-                else{
-                    toast.success('user created successfully !');
-
-                }
+                localStorage.setItem('user', JSON.stringify(response.data.user));
             }
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-        }
-        )
-        .catch((error) => {
-            if(error.response){
-                // toast.error(error.response.data.message);
-                
-                const theme = localStorage.getItem('theme');
-                if(theme === 'dark'){
-                toast.error(error.response.data.message,
-                    {
-                      style: {
-                        borderRadius: '10px',
-                        background: '#333',
-                        color: '#fff',
-                      },
+            )
+            .catch((error) => {
+                if (error.response) {
+                    // toast.error(error.response.data.message);
+
+                    const theme = localStorage.getItem('theme');
+                    if (theme === 'dark') {
+                        toast.error(error.response.data.message,
+                            {
+                                style: {
+                                    borderRadius: '10px',
+                                    background: '#333',
+                                    color: '#fff',
+                                },
+                            }
+                        );
                     }
-                  );
-                }
-                else{
-                    toast.error('error.response.data.message');
+                    else {
+                        toast.error('error.response.data.message');
 
+                    }
                 }
-
-            } 
-        })
+            })
     }
 
     return (
         <>
-        <Navbar/>
+            <Navbar />
             <div className="flex h-screen  justify-center items-center ">
                 <div id="my_modal_1" className=" ">
                     <div className="modal-box border shadow-md rounded-3xl w-[25rem]  dark:bg-slate-900 dark:text-white dark:border-gray-500">
@@ -91,7 +93,7 @@ function Signup() {
                             {/* email */}
                             <div className="mt-4 space-y-2">
                                 <h4>Email <span className="text-red-500">*</span></h4>
-                                <input type="email" placeholder='Enter your Email' className="w-80 px-3 h-10 border rounded-md outline-none  dark:bg-slate-900 dark:text-white dark:border-gray-500" {...register("email", { required: true })}/>
+                                <input type="email" placeholder='Enter your Email' className="w-80 px-3 h-10 border rounded-md outline-none  dark:bg-slate-900 dark:text-white dark:border-gray-500" {...register("email", { required: true })} />
                                 {errors.email && <span className="block text-sm text-red-500">Pleaes Enter Email</span>}
                             </div>
                             {/* password */}

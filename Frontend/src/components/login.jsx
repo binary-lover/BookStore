@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import Logout from './Logout';
 
 function login() {
+    const islogin = localStorage.getItem('user');
+    // console.log(islogin);
     const {
         register,
         handleSubmit,
@@ -17,10 +20,10 @@ function login() {
         }
         await axios.post('http://localhost:4001/user/login', userInfo)
         .then((response) => {
-            console.log(response.data);
-            if(response.data){const theme = localStorage.getItem('theme');
+            if(response.data){
+                const theme = localStorage.getItem('theme');
                 if(theme === 'dark'){
-                toast.success('user created successfully !',
+                    toast.success('Login successfully !',
                     {
                       style: {
                         borderRadius: '10px',
@@ -28,14 +31,20 @@ function login() {
                         color: '#fff',
                       },
                     }
-                  );
+                );
                 }
                 else{
-                    toast.success('user created successfully !');
+                    toast.success('Login successfully !');
 
                 }
             }
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            setTimeout(() => {
+                window.location.reload();
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                document.getElementById('my_modal_3').close();
+            }, 2000);
+            // press the close button
+
         }
         )
         .catch((error) => {
@@ -63,7 +72,7 @@ function login() {
 
     return (
         <div className="">
-            <dialog id="my_modal_3" className="modal backdrop-blur-sm">
+            <dialog id="my_modal_3" className="modal backdrop-brightness-50">
                 <div className="modal-box dark:bg-slate-900 dark:text-white ">
                     <form onSubmit={handleSubmit(onSubmit)} method="dialog">
                         {/* if there is a button in form, it will close the modal */}
