@@ -25,6 +25,15 @@ cd Frontend
 npm install
 ```
 
+### add .env file in the Frontend folder
+
+```bash
+touch .env
+```
+- add variable:
+    -  PORT
+    - REACT_APP_API_URL (from mongodb compass/atlas)
+
 #### Start the Front End 
 
 ```bash
